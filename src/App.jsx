@@ -1,5 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, lazy, Suspense } from "react";
 import "./enhancements.css";
+
+const BackgroundField = lazy(() => import("./three/BackgroundField"));
+const HeroOrbit = lazy(() => import("./three/HeroOrbit"));
 import {
   ArrowUpRight,
   Download,
@@ -249,6 +252,9 @@ function App() {
       <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
       <div className="ambient" />
       <div className="grid-bg" />
+      <Suspense fallback={null}>
+        <BackgroundField />
+      </Suspense>
 
       <header className="navbar">
         <a className="brand" href="#home">
@@ -366,16 +372,9 @@ function App() {
                 AVAILABLE FOR OPPORTUNITIES
               </div>
 
-              <div className="cube-wrap">
-                <div className="cube">
-                  <div className="face front">SQL</div>
-                  <div className="face back">DATA</div>
-                  <div className="face right">BI</div>
-                  <div className="face left">EXCEL</div>
-                  <div className="face top">AUTO</div>
-                  <div className="face bottom">∞</div>
-                </div>
-              </div>
+              <Suspense fallback={<div className="hero-orbit" aria-hidden="true" />}>
+                <HeroOrbit />
+              </Suspense>
 
               <div className="hero-card-foot">
                 <div>
