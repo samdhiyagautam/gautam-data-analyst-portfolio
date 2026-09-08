@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import "./enhancements.css";
 import {
   ArrowUpRight,
   Download,
@@ -7,6 +8,10 @@ import {
   Mail,
   Menu,
   X,
+  RefreshCw,
+  Copy,
+  Check,
+  ChevronUp,
 } from "lucide-react";
 
 const API_URL =
@@ -71,6 +76,10 @@ function App() {
   const [projects, setProjects] = useState(fallbackProjects);
   const [loadingProjects, setLoadingProjects] = useState(true);
   const [apiOnline, setApiOnline] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [emailCopied, setEmailCopied] = useState(false);
 
   useEffect(() => {
     const onMove = (e) => {
@@ -84,6 +93,51 @@ function App() {
       window.removeEventListener("pointermove", onMove);
     };
   }, []);
+
+  useEffect(() => {
+    const ids = ["home", "about", "skills", "projects", "workflow", "contact"];
+    const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-18% 0px -62% 0px", threshold: [0.1, 0.25, 0.5] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(total > 0 ? Math.min(100, (window.scrollY / total) * 100) : 0);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        setSelectedProject(null);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
 
   useEffect(() => {
     let cancelled = false;
@@ -134,6 +188,46 @@ function App() {
     };
   }, []);
 
+  const refreshProjects = async () => {
+    setLoadingProjects(true);
+
+    try {
+      const response = await fetch(`${API_URL}?t=${Date.now()}`, {
+        headers: { Accept: "application/json" },
+        cache: "no-store",
+      });
+
+      if (!response.ok) throw new Error(`API returned ${response.status}`);
+
+      const data = await response.json();
+
+      if (Array.isArray(data.projects)) {
+        const normalized = data.projects.map((project, index) => ({
+          ...project,
+          number: project.number || String(index + 1).padStart(2, "0"),
+        }));
+
+        setProjects(normalized);
+        setApiOnline(true);
+      }
+    } catch (error) {
+      console.error("Project refresh error:", error);
+      setApiOnline(false);
+    } finally {
+      setLoadingProjects(false);
+    }
+  };
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("zaixaric2000@gmail.com");
+      setEmailCopied(true);
+      window.setTimeout(() => setEmailCopied(false), 1800);
+    } catch (error) {
+      console.error("Copy email failed:", error);
+    }
+  };
+
   const filteredProjects = useMemo(() => {
     if (filter === "All") return projects;
 
@@ -152,6 +246,7 @@ function App() {
 
   return (
     <div className="app">
+      <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
       <div className="ambient" />
       <div className="grid-bg" />
 
@@ -165,6 +260,7 @@ function App() {
             (item) => (
               <a
                 key={item}
+                className={activeSection === item ? "nav-link active" : "nav-link"}
                 href={`#${item}`}
                 onClick={() => setMenuOpen(false)}
               >
@@ -219,13 +315,15 @@ function App() {
                 Explore projects <ArrowUpRight size={16} />
               </a>
 
-              <a
-                className="btn ghost"
-                href="/gautam-data-analyst-portfolio/resume/Gautam_Data_Analyst_Resume.pdf"
-                download
-              >
-                Download resume <Download size={16} />
+              <a className="btn ghost" href="#contact">
+                Let&apos;s connect <ArrowUpRight size={16} />
               </a>
+            </div>
+
+            <div className="hero-highlights">
+              <span><b>04</b> Projects</span>
+              <span><b>01</b> Live system</span>
+              <span><b>API</b> Connected</span>
             </div>
 
             <div className="social-row">
@@ -375,17 +473,33 @@ function App() {
                 Work that proves <span>the skill.</span>
               </h2>
 
-              <div className="api-status">
-                <span
-                  className={
-                    apiOnline ? "api-dot online" : "api-dot offline"
-                  }
-                />
-                {loadingProjects
-                  ? "Loading projects..."
-                  : apiOnline
-                  ? "Live API connected"
-                  : "Offline fallback active"}
+              <div className="api-status-row">
+                <div className="api-status">
+                  <span
+                    className={
+                      apiOnline ? "api-dot online" : "api-dot offline"
+                    }
+                  />
+                  {loadingProjects
+                    ? "Loading projects..."
+                    : apiOnline
+                    ? "Live API connected"
+                    : "Offline fallback active"}
+                </div>
+
+                <button
+                  className="api-refresh"
+                  onClick={refreshProjects}
+                  disabled={loadingProjects}
+                  title="Refresh projects"
+                  aria-label="Refresh projects"
+                >
+                  <RefreshCw
+                    size={13}
+                    className={loadingProjects ? "spin" : ""}
+                  />
+                  Refresh
+                </button>
               </div>
             </div>
 
@@ -460,29 +574,38 @@ function App() {
                   </div>
                 )}
 
-                {project.dashboard && (
-                  <div className="actions project-actions">
-                    <a
-                      className="btn primary"
-                      href={project.dashboard}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Live dashboard ↗
-                    </a>
-
-                    {project.github && (
+                <div className="project-footer">
+                  {project.dashboard && (
+                    <div className="actions project-actions">
                       <a
-                        className="btn ghost"
-                        href={project.github}
+                        className="btn primary"
+                        href={project.dashboard}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        GitHub repo ↗
+                        Live dashboard ↗
                       </a>
-                    )}
-                  </div>
-                )}
+
+                      {project.github && (
+                        <a
+                          className="btn ghost"
+                          href={project.github}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          GitHub repo ↗
+                        </a>
+                      )}
+                    </div>
+                  )}
+
+                  <button
+                    className="details-link"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    View details <ArrowUpRight size={14} />
+                  </button>
+                </div>
               </article>
             ))}
           </div>
@@ -548,9 +671,19 @@ function App() {
           <div className="contact-card">
             <small>GET IN TOUCH</small>
 
-            <a href="mailto:zaixaric2000@gmail.com">
-              zaixaric2000@gmail.com ↗
-            </a>
+            <div className="contact-email-row">
+              <a href="mailto:zaixaric2000@gmail.com">
+                zaixaric2000@gmail.com ↗
+              </a>
+              <button
+                className="copy-btn"
+                onClick={copyEmail}
+                aria-label="Copy email address"
+                title="Copy email address"
+              >
+                {emailCopied ? <Check size={14} /> : <Copy size={14} />}
+              </button>
+            </div>
 
             <a
               href="https://www.linkedin.com/in/connectwithgautam"
@@ -570,6 +703,97 @@ function App() {
           </div>
         </section>
       </main>
+
+      {selectedProject && (
+        <div
+          className="modal-backdrop"
+          role="presentation"
+          onClick={() => setSelectedProject(null)}
+        >
+          <div
+            className="project-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              className="modal-close"
+              onClick={() => setSelectedProject(null)}
+              aria-label="Close project details"
+            >
+              <X size={18} />
+            </button>
+
+            <div className="modal-topline">
+              <span className="project-no">{selectedProject.number}</span>
+              <span
+                className={
+                  selectedProject.status === "LIVE"
+                    ? "live-pill"
+                    : "soon-pill"
+                }
+              >
+                {selectedProject.status}
+              </span>
+            </div>
+
+            <p className="project-type">{selectedProject.type}</p>
+            <h3 id="project-modal-title">{selectedProject.title}</h3>
+            <p className="modal-description">{selectedProject.description}</p>
+
+            <div className="tags">
+              {(selectedProject.skills || []).map((skill) => (
+                <span key={skill}>{skill}</span>
+              ))}
+            </div>
+
+            {selectedProject.metrics && (
+              <div className="metric-grid modal-metrics">
+                {selectedProject.metrics.map(([label, value]) => (
+                  <div key={label}>
+                    <small>{label}</small>
+                    <strong>{value}</strong>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="modal-actions">
+              {selectedProject.dashboard && (
+                <a
+                  className="btn primary"
+                  href={selectedProject.dashboard}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open dashboard <ArrowUpRight size={15} />
+                </a>
+              )}
+
+              {selectedProject.github && (
+                <a
+                  className="btn ghost"
+                  href={selectedProject.github}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open GitHub <Github size={15} />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <button
+        className="back-top"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="Back to top"
+        title="Back to top"
+      >
+        <ChevronUp size={17} />
+      </button>
 
       <footer className="footer section-wrap">
         <span>© 2026 Gautam</span>
