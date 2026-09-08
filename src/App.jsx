@@ -315,9 +315,13 @@ function App() {
                 Explore projects <ArrowUpRight size={16} />
               </a>
 
-              <a className="btn ghost" href="#contact">
-                Let&apos;s connect <ArrowUpRight size={16} />
-              </a>
+             <a
+  className="btn ghost"
+  href="/gautam-data-analyst-portfolio/resume/Gautam_Data_Analyst_Resume.pdf"
+  download
+>
+  Download resume <Download size={16} />
+</a>
             </div>
 
             <div className="hero-highlights">
