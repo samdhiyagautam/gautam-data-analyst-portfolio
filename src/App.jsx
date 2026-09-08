@@ -220,7 +220,7 @@ function App() {
 
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText("gautamsamdhiya2000@gmail.com");
+      await navigator.clipboard.writeText("zaixaric2000@gmail.com");
       setEmailCopied(true);
       window.setTimeout(() => setEmailCopied(false), 1800);
     } catch (error) {
@@ -271,7 +271,7 @@ function App() {
 
           <a
             className="nav-mobile-cta"
-            href="mailto:gautamsamdhiya2000@gmail.com"
+            href="mailto:zaixaric2000@gmail.com"
           >
             Let&apos;s talk ↗
           </a>
@@ -279,7 +279,7 @@ function App() {
 
         <a
           className="nav-cta"
-          href="mailto:gautamsamdhiya2000@gmail.com"
+          href="mailto:zaixaric2000@gmail.com"
         >
           Let&apos;s talk ↗
         </a>
@@ -345,7 +345,7 @@ function App() {
                 LinkedIn
               </a>
 
-              <a href="mailto:gautamsamdhiya2000@gmail.com">
+              <a href="mailto:zaixaric2000@gmail.com">
                 <Mail size={15} />
                 Email
               </a>
@@ -672,8 +672,8 @@ function App() {
             <small>GET IN TOUCH</small>
 
             <div className="contact-email-row">
-              <a href="mailto:gautamsamdhiya2000@gmail.com">
-                gautamsamdhiya2000@gmail.com ↗
+              <a href="mailto:zaixaric2000@gmail.com">
+                zaixaric2000@gmail.com ↗
               </a>
               <button
                 className="copy-btn"
