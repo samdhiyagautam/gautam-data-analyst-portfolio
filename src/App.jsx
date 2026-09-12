@@ -608,6 +608,12 @@ function App() {
     href="https://github.com/samdhiyagautam/gautam-data-analyst-portfolio/tree/main/projects/python-data-cleaning"
     target="_blank"
     rel="noreferrer"
+{project.github ? (
+  <a
+    className="details-link"
+    href={project.github}
+    target="_blank"
+    rel="noreferrer"
   >
     View project <ArrowUpRight size={14} />
   </a>
