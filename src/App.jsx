@@ -1,8 +1,5 @@
-import { useEffect, useMemo, useState, lazy, Suspense } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./enhancements.css";
-
-const BackgroundField = lazy(() => import("./three/BackgroundField"));
-const HeroOrbit = lazy(() => import("./three/HeroOrbit"));
 import {
   ArrowUpRight,
   Download,
@@ -223,7 +220,7 @@ function App() {
 
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText("zaixaric2000@gmail.com");
+      await navigator.clipboard.writeText("gautamsamdhiya2000@gmail.com");
       setEmailCopied(true);
       window.setTimeout(() => setEmailCopied(false), 1800);
     } catch (error) {
@@ -252,9 +249,6 @@ function App() {
       <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
       <div className="ambient" />
       <div className="grid-bg" />
-      <Suspense fallback={null}>
-        <BackgroundField />
-      </Suspense>
 
       <header className="navbar">
         <a className="brand" href="#home">
@@ -277,7 +271,7 @@ function App() {
 
           <a
             className="nav-mobile-cta"
-            href="mailto:zaixaric2000@gmail.com"
+            href="mailto:gautamsamdhiya2000@gmail.com"
           >
             Let&apos;s talk ↗
           </a>
@@ -285,7 +279,7 @@ function App() {
 
         <a
           className="nav-cta"
-          href="mailto:zaixaric2000@gmail.com"
+          href="mailto:gautamsamdhiya2000@gmail.com"
         >
           Let&apos;s talk ↗
         </a>
@@ -321,13 +315,9 @@ function App() {
                 Explore projects <ArrowUpRight size={16} />
               </a>
 
-             <a
-  className="btn ghost"
-  href="/gautam-data-analyst-portfolio/resume/Gautam_Data_Analyst_Resume.pdf"
-  download
->
-  Download resume <Download size={16} />
-</a>
+              <a className="btn ghost" href="#contact">
+                Let&apos;s connect <ArrowUpRight size={16} />
+              </a>
             </div>
 
             <div className="hero-highlights">
@@ -355,7 +345,7 @@ function App() {
                 LinkedIn
               </a>
 
-              <a href="mailto:zaixaric2000@gmail.com">
+              <a href="mailto:gautamsamdhiya2000@gmail.com">
                 <Mail size={15} />
                 Email
               </a>
@@ -372,9 +362,16 @@ function App() {
                 AVAILABLE FOR OPPORTUNITIES
               </div>
 
-              <Suspense fallback={<div className="hero-orbit" aria-hidden="true" />}>
-                <HeroOrbit />
-              </Suspense>
+              <div className="cube-wrap">
+                <div className="cube">
+                  <div className="face front">SQL</div>
+                  <div className="face back">DATA</div>
+                  <div className="face right">BI</div>
+                  <div className="face left">EXCEL</div>
+                  <div className="face top">AUTO</div>
+                  <div className="face bottom">∞</div>
+                </div>
+              </div>
 
               <div className="hero-card-foot">
                 <div>
@@ -418,50 +415,40 @@ function App() {
           </div>
         </section>
 
-        <section id="skills" className="section-wrap section">
-          <p className="eyebrow">SKILLS</p>
+        <section id="skills" className="section-wrap section skills-pro">
+          <div className="section-head skills-heading">
+            <div>
+              <p className="eyebrow">SKILL STACK</p>
+              <h2>Tools I use to <span>solve business problems.</span></h2>
+              <p className="skills-intro">A practical stack focused on analysis, reporting, visualization and automation.</p>
+            </div>
+            <div className="skill-summary">
+              <span><b>6</b> core tools</span>
+              <span><b>1</b> live project</span>
+              <span><b>100%</b> practical focus</span>
+            </div>
+          </div>
 
-          <h2>
-            Tools I&apos;m building <span>real-world depth in.</span>
-          </h2>
-
-          <div className="skill-grid">
+          <div className="skill-dashboard">
             {[
-              [
-                "01",
-                "SQL",
-                "Joins, CTEs, window functions, aggregations and business queries.",
-              ],
-              [
-                "02",
-                "Excel",
-                "Dashboards, formulas, pivots, cleaning and reporting.",
-              ],
-              [
-                "03",
-                "Power BI",
-                "KPI design, DAX foundations and visual storytelling.",
-              ],
-              [
-                "04",
-                "Python",
-                "Pandas, exploration, cleaning and analysis foundations.",
-              ],
-              [
-                "05",
-                "Apps Script",
-                "Automated reports, scheduled workflows and repeatable processes.",
-              ],
-              [
-                "06",
-                "Git & GitHub",
-                "Version control, documentation and portfolio publishing.",
-              ],
-            ].map(([no, title, text]) => (
-              <article className="card" key={title}>
-                <small>{no}</small>
+              ["01", "SQL", "Advanced foundation", 88, "Joins • CTEs • Windows • KPI queries"],
+              ["02", "Excel", "Business reporting", 86, "Pivots • Lookups • Cleaning • Dashboards"],
+              ["03", "Power BI", "BI & storytelling", 78, "DAX • Modeling • KPIs • Drill-downs"],
+              ["04", "Python", "Analytics & automation", 72, "Pandas • Cleaning • EDA • Automation"],
+              ["05", "Apps Script", "Workflow automation", 74, "Scheduled reports • Sheets automation"],
+              ["06", "Git & GitHub", "Delivery & versioning", 80, "Commits • Branches • Portfolio publishing"],
+            ].map(([no, title, level, percent, detail]) => (
+              <article className="skill-pro-card" key={title}>
+                <div className="skill-pro-top">
+                  <span className="skill-no">{no}</span>
+                  <span className="skill-percent">{percent}%</span>
+                </div>
                 <h3>{title}</h3>
-                <p>{text}</p>
+                <p className="skill-level">{level}</p>
+                <div className="skill-meter" aria-label={`${title} ${percent}%`}>
+                  <span style={{ width: `${percent}%` }} />
+                </div>
+                <p className="skill-detail">{detail}</p>
               </article>
             ))}
           </div>
@@ -675,8 +662,8 @@ function App() {
             <small>GET IN TOUCH</small>
 
             <div className="contact-email-row">
-              <a href="mailto:zaixaric2000@gmail.com">
-                zaixaric2000@gmail.com ↗
+              <a href="mailto:gautamsamdhiya2000@gmail.com">
+                gautamsamdhiya2000@gmail.com ↗
               </a>
               <button
                 className="copy-btn"
