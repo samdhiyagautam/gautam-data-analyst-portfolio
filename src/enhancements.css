@@ -481,3 +481,397 @@
     padding: 20px;
   }
 }
+
+/* =========================================
+   HERO 3D CUBE — FIXED + ANIMATED
+========================================= */
+
+.hero-scene {
+  position: relative;
+  overflow: visible;
+  perspective: 1400px;
+}
+
+.cube-wrap {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.cube {
+  position: relative;
+
+  width: 132px;
+  height: 132px;
+
+  transform-style: preserve-3d;
+  transform-origin: center center;
+
+  animation:
+    cubeRotate 14s linear infinite,
+    cubeHover 5s ease-in-out infinite;
+
+  will-change: transform;
+
+  filter:
+    drop-shadow(0 25px 28px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 28px rgba(57, 216, 121, 0.12));
+}
+
+/* IMPORTANT: forces all faces to overlap correctly */
+.cube .face {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 132px !important;
+  height: 132px !important;
+
+  display: grid !important;
+  place-items: center !important;
+
+  margin: 0 !important;
+
+  border: 1px solid rgba(112, 255, 158, 0.28);
+
+  color: #eaffef;
+
+  font-size: 22px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(28, 135, 71, 0.92),
+      rgba(4, 25, 12, 0.97)
+    );
+
+  box-shadow:
+    inset 0 0 25px rgba(255, 255, 255, 0.025),
+    inset 0 0 45px rgba(57, 216, 121, 0.045);
+
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+}
+
+/* 6 faces */
+
+.cube .front {
+  transform: translateZ(66px) !important;
+}
+
+.cube .back {
+  transform: rotateY(180deg) translateZ(66px) !important;
+}
+
+.cube .right {
+  transform: rotateY(90deg) translateZ(66px) !important;
+}
+
+.cube .left {
+  transform: rotateY(-90deg) translateZ(66px) !important;
+}
+
+.cube .top {
+  transform: rotateX(90deg) translateZ(66px) !important;
+}
+
+.cube .bottom {
+  transform: rotateX(-90deg) translateZ(66px) !important;
+
+  color: #ffdce0;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(125, 33, 47, 0.9),
+      rgba(27, 6, 10, 0.98)
+    );
+}
+
+/* Main rotation */
+
+@keyframes cubeRotate {
+  0% {
+    transform: rotateX(-16deg) rotateY(0deg);
+  }
+
+  25% {
+    transform: rotateX(18deg) rotateY(90deg);
+  }
+
+  50% {
+    transform: rotateX(-11deg) rotateY(180deg);
+  }
+
+  75% {
+    transform: rotateX(17deg) rotateY(270deg);
+  }
+
+  100% {
+    transform: rotateX(-16deg) rotateY(360deg);
+  }
+}
+
+/* Floating effect */
+
+@keyframes cubeHover {
+  0%,
+  100% {
+    margin-top: 0;
+  }
+
+  50% {
+    margin-top: -12px;
+  }
+}
+
+/* =========================================
+   ORBIT RINGS
+========================================= */
+
+.cube-wrap::before {
+  content: "";
+
+  position: absolute;
+
+  width: 245px;
+  height: 245px;
+
+  border: 1px solid rgba(57, 216, 121, 0.12);
+
+  border-radius: 50%;
+
+  transform: rotateX(67deg);
+
+  animation:
+    orbitA 10s linear infinite;
+
+  pointer-events: none;
+}
+
+.cube-wrap::after {
+  content: "";
+
+  position: absolute;
+
+  width: 205px;
+  height: 205px;
+
+  border: 1px dashed rgba(214, 64, 80, 0.12);
+
+  border-radius: 50%;
+
+  transform: rotateY(68deg);
+
+  animation:
+    orbitB 7s linear infinite reverse;
+
+  pointer-events: none;
+}
+
+@keyframes orbitA {
+  from {
+    transform: rotateX(67deg) rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateX(67deg) rotateZ(360deg);
+  }
+}
+
+@keyframes orbitB {
+  from {
+    transform: rotateY(68deg) rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateY(68deg) rotateZ(360deg);
+  }
+}
+
+/* =========================================
+   ANIMATED DATA BACKGROUND
+========================================= */
+
+.app::before {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  z-index: -4;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 12% 25%,
+      rgba(57, 216, 121, 0.09) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(57, 216, 121, 0.08) 0 1.5px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 68% 67%,
+      rgba(214, 64, 80, 0.07) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 25% 78%,
+      rgba(57, 216, 121, 0.06) 0 1.5px,
+      transparent 3px
+    );
+
+  background-size:
+    220px 220px,
+    270px 270px,
+    310px 310px,
+    250px 250px;
+
+  animation: particleDrift 20s linear infinite;
+}
+
+@keyframes particleDrift {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0;
+  }
+
+  50% {
+    background-position:
+      50px -35px,
+      -45px 30px,
+      35px 45px,
+      -30px -40px;
+  }
+
+  100% {
+    background-position:
+      100px -70px,
+      -90px 60px,
+      70px 90px,
+      -60px -80px;
+  }
+}
+.grid-bg {
+  animation: gridMove 18s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes gridMove {
+  from {
+    background-position:
+      0 0,
+      0 0;
+  }
+
+  to {
+    background-position:
+      38px 38px,
+      38px 38px;
+  }
+}
+
+.green-orb {
+  animation:
+    greenFloat 7s ease-in-out infinite,
+    greenPulse 4s ease-in-out infinite;
+}
+
+.red-orb {
+  animation:
+    redFloat 8s ease-in-out infinite,
+    redPulse 5s ease-in-out infinite;
+}
+
+@keyframes greenFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(18px, -18px, 0);
+  }
+}
+
+@keyframes redFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-20px, 15px, 0);
+  }
+}
+
+@keyframes greenPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes redPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 0.65;
+  }
+}
+
+@media (max-width: 680px) {
+  .cube {
+    animation-duration: 18s, 6s;
+  }
+
+  .cube-wrap::before {
+    width: 205px;
+    height: 205px;
+  }
+
+  .cube-wrap::after {
+    width: 170px;
+    height: 170px;
+  }
+
+  .grid-bg {
+    animation-duration: 30s;
+  }
+
+  .app::before {
+    animation-duration: 32s;
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cube,
+  .cube-wrap::before,
+  .cube-wrap::after,
+  .green-orb,
+  .red-orb,
+  .grid-bg,
+  .app::before {
+    animation: none !important;
+  }
+}
