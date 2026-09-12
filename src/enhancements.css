@@ -1873,3 +1873,93 @@ h2 span {
     transform: none;
   }
 }
+/* =========================================
+   SKILLS — JOB READY MICRO INTERACTIONS
+========================================= */
+
+.card {
+  overflow: hidden;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+
+  left: 22px;
+  right: 22px;
+  bottom: 18px;
+
+  height: 3px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(57, 216, 121, 0.9),
+      rgba(57, 216, 121, 0.12)
+    );
+
+  transform-origin: left;
+  transform: scaleX(0.72);
+
+  opacity: 0.72;
+
+  transition:
+    transform 0.28s ease,
+    opacity 0.28s ease;
+}
+
+.card:nth-child(2)::after {
+  transform: scaleX(0.68);
+}
+
+.card:nth-child(3)::after {
+  transform: scaleX(0.58);
+}
+
+.card:nth-child(4)::after {
+  transform: scaleX(0.62);
+}
+
+.card:nth-child(5)::after {
+  transform: scaleX(0.55);
+}
+
+.card:nth-child(6)::after {
+  transform: scaleX(0.65);
+}
+
+.card:hover::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.card:hover h3 {
+  color: var(--green-soft);
+  transition: color 0.2s ease;
+}
+
+.card:hover small {
+  text-shadow:
+    0 0 14px rgba(57, 216, 121, 0.45);
+}
+
+/* Subtle capability label */
+.card p {
+  padding-bottom: 13px;
+}
+
+@media (max-width: 680px) {
+  .card::after {
+    left: 20px;
+    right: 20px;
+    bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card::after {
+    transition: none;
+  }
+}
