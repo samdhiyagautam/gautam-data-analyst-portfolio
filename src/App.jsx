@@ -602,12 +602,23 @@ function App() {
                     </div>
                   )}
 
-                  <button
-                    className="details-link"
-                    onClick={() => setSelectedProject(project)}
-                  >
-                    View details <ArrowUpRight size={14} />
-                  </button>
+                 {project.id === "python-data-cleaning" ? (
+  <a
+    className="details-link"
+    href="https://github.com/samdhiyagautam/gautam-data-analyst-portfolio/tree/main/projects/python-data-cleaning"
+    target="_blank"
+    rel="noreferrer"
+  >
+    View project <ArrowUpRight size={14} />
+  </a>
+) : (
+  <button
+    className="details-link"
+    onClick={() => setSelectedProject(project)}
+  >
+    View details <ArrowUpRight size={14} />
+  </button>
+)}
                 </div>
               </article>
             ))}
