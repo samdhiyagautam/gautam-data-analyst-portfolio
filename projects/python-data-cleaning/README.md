@@ -6,7 +6,7 @@ A reproducible Python workflow that takes the portfolio's 3,000-row sales datase
 
 ## Dataset
 
-The source dataset contains 3,000 sales/order records and 20 source columns covering order dates, customers, products, pricing, revenue, cost, profit, channels, payment methods and order status. The business statuses are Delivered, Returned and Cancelled. fileciteturn20file0L12-L16
+The source dataset contains 3,000 sales/order records and 20 source columns covering order dates, customers, products, pricing, revenue, cost, profit, channels, payment methods and order status. The business statuses are Delivered, Returned and Cancelled.
 
 The dataset is a **simulated e-commerce dataset for portfolio demonstration**.
 
