@@ -45,11 +45,21 @@ const fallbackProjects = [
     id: "python-data-cleaning",
     number: "02",
     title: "Python Data Cleaning & Automation",
-    status: "COMING SOON",
+    status: "LIVE",
     type: "PYTHON • PANDAS • AUTOMATION",
     description:
       "A reusable data-cleaning workflow for messy Excel/CSV files with automated quality checks and report generation.",
     skills: ["Python", "Pandas", "Data Cleaning", "Automation"],
+    dashboard:
+      "https://docs.google.com/spreadsheets/d/1wWFWKT9UD5Q7-sDwBzF6OR0cZqwLbNX5WZeovl80KT8/edit?usp=sharing",
+    github:
+      "https://github.com/samdhiyagautam/gautam-data-analyst-portfolio/tree/main/projects/python-data-cleaning",
+    metrics: [
+      ["ROWS CLEANED", "3,000"],
+      ["QUALITY CHECKS", "10"],
+      ["ANOMALIES", "0"],
+      ["MARGIN", "32.3%"]
+    ],
   },
   {
     id: "power-bi-dashboard",
@@ -602,29 +612,12 @@ function App() {
                     </div>
                   )}
 
-                 {project.id === "python-data-cleaning" ? (
-  <a
-    className="details-link"
-    href="https://github.com/samdhiyagautam/gautam-data-analyst-portfolio/tree/main/projects/python-data-cleaning"
-    target="_blank"
-    rel="noreferrer"
-{project.github ? (
-  <a
-    className="details-link"
-    href={project.github}
-    target="_blank"
-    rel="noreferrer"
-  >
-    View project <ArrowUpRight size={14} />
-  </a>
-) : (
-  <button
-    className="details-link"
-    onClick={() => setSelectedProject(project)}
-  >
-    View details <ArrowUpRight size={14} />
-  </button>
-)}
+                  <button
+                    className="details-link"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    View details <ArrowUpRight size={14} />
+                  </button>
                 </div>
               </article>
             ))}
