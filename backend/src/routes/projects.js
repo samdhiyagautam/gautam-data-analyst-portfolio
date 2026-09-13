@@ -23,18 +23,26 @@ const projects = [
       ["AOV", "₹25.8K"]
     ]
   },
- {
-  id: "python-data-cleaning",
-  number: "02",
-  title: "Python Data Cleaning & Automation",
-  status: "LIVE",
-  type: "PYTHON • PANDAS • AUTOMATION",
-  skills: ["Python", "Pandas", "Data Cleaning", "Automation"],
-  description:
-    "Reusable data-cleaning and quality-check workflow for messy CSV and Excel data.",
-  github:
-    "https://github.com/samdhiyagautam/gautam-data-analyst-portfolio/tree/main/projects/python-data-cleaning"
-},
+  {
+    id: "python-data-cleaning",
+    number: "02",
+    title: "Python Data Cleaning & Automation",
+    status: "LIVE",
+    type: "PYTHON • PANDAS • AUTOMATION",
+    skills: ["Python", "Pandas", "Data Cleaning", "Automation"],
+    description:
+      "Reusable data-cleaning and quality-check workflow for messy CSV and Excel data.",
+    dashboard:
+      "https://docs.google.com/spreadsheets/d/1wWFWKT9UD5Q7-sDwBzF6OR0cZqwLbNX5WZeovl80KT8/edit?usp=sharing",
+    github:
+      "https://github.com/samdhiyagautam/gautam-data-analyst-portfolio/tree/main/projects/python-data-cleaning",
+    metrics: [
+      ["ROWS CLEANED", "3,000"],
+      ["QUALITY CHECKS", "10"],
+      ["ANOMALIES", "0"],
+      ["MARGIN", "32.3%"]
+    ]
+  },
   {
     id: "power-bi-dashboard",
     number: "03",
