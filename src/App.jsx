@@ -51,7 +51,7 @@ const fallbackProjects = [
       "A reusable data-cleaning workflow for messy Excel/CSV files with automated quality checks and report generation.",
     skills: ["Python", "Pandas", "Data Cleaning", "Automation"],
     dashboard:
-      "https://docs.google.com/spreadsheets/d/1wWFWKT9UD5Q7-sDwBzF6OR0cZqwLbNX5WZeovl80KT8/edit?usp=sharing",
+      "https://docs.google.com/spreadsheets/d/1qh0vK3QDlxAFRPLu7ir-9K-zbenCYyogR0y931QbFZI/edit?usp=sharing",
     github:
       "https://github.com/samdhiyagautam/gautam-data-analyst-portfolio/tree/main/projects/python-data-cleaning",
     metrics: [
