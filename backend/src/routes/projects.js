@@ -33,7 +33,7 @@ const projects = [
     description:
       "Reusable data-cleaning and quality-check workflow for messy CSV and Excel data.",
     dashboard:
-      "https://docs.google.com/spreadsheets/d/1wWFWKT9UD5Q7-sDwBzF6OR0cZqwLbNX5WZeovl80KT8/edit?usp=sharing",
+      "https://docs.google.com/spreadsheets/d/1qh0vK3QDlxAFRPLu7ir-9K-zbenCYyogR0y931QbFZI/edit?usp=sharing",
     github:
       "https://github.com/samdhiyagautam/gautam-data-analyst-portfolio/tree/main/projects/python-data-cleaning",
     metrics: [
